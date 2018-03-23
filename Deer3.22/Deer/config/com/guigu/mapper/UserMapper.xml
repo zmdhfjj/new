@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.guigu.mapper.UserMapper">
+ 	<sql id="userInfo">
+ 		isfrozen isFrozen,head_portrait headPortrait,bank_card bankCard,phone,email,birthday,user_name userName,gender,user_id userId
+ 	</sql>
+ 	<select id="userNameCheck" parameterType="String" resultType="int">
+ 		select count(*) from users where user_name=#{name}
+ 	</select>
+ 	<select id="phoneCheck" parameterType="String" resultType="int">
+ 		select count(*) from users where phone = #{phone}
+ 	</select>
+ 	<insert id="addUser" parameterType="User">
+ 		insert into users (user_name,user_pass,phone,email,head_portrait) values(#{userName},#{userPass},#{phone},#{email},#{headPortrait})
+ 	</insert>
+ 	<select id="getUser" parameterType="String" resultType="User">
+ 		select <include refid="userInfo"></include> from users where user_name =#{name}
+ 	</select>
+ 	<select id="passCheckByUserName" parameterType="String" resultType="String">
+ 		select user_pass from users where user_name = #{name}
+ 	</select>
+ 	<update id="addHeadPortrait" parameterType="map">
+ 		update users set head_portrait= #{path} where user_name =#{userName}
+ 	</update>
+ </mapper>
